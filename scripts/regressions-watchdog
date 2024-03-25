@@ -69,17 +69,25 @@ else
   end
 
   # (Case 1)
-  deadKid,processStatus = Process.waitpid2(child)
+  deadKid, processStatus = Process.waitpid2(child)
   endTime = Time.now
 
   # Kill the sleeper, if he's still around
   kill3 sleeper
   Process.waitpid(sleeper)
 
+  failed = (!processStatus.exited?) || (processStatus.exitstatus != 0)
+
   File.open(file,'w') do |fout|
-    fout.puts( endTime-startTime )
+    if failed
+      fout.puts('nan')
+    else
+      fout.puts( endTime-startTime )
+    end
   end
-  exit( processStatus.exitstatus || 0 )
+  if failed
+    exit(1)
+  else
+    exit(0)
+  end
 end
-
-

@@ -11,9 +11,11 @@ import math
 import os
 import sys
 import subprocess
+import socket
 from threading import Timer
 from termcolor import colored
 from collections import ChainMap
+from datetime import datetime
 
 def clean_all_bmarks(root_path, bmark_list, result_path):
   os.chdir(result_path)
@@ -33,9 +35,13 @@ def get_time(root_path, bmark, test_types):
   os.chdir(os.path.join(root_path, bmark))
   result = { bmark: {}}
   for test_type in test_types:
-    f = open(test_type+".time", 'r')
-    result[bmark][test_type] = float(f.readline())
-    f.close()
+    try:
+      f = open(test_type+".time", 'r')
+      res = float(f.readline())
+      f.close()
+    except Exception:
+      res = math.nan
+    result[bmark][test_type] = res
   return result
 
 def run_one(path, bmark, test_type):
@@ -82,7 +88,7 @@ def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
   #  del perf_dic[bmark]['seq']
 
   mean = { 'geomean': {}}
-  for key in perf_dic['2mm'].keys():
+  for key in perf_dic[list(perf_dic)[0]].keys():
     geo = 1
     for bmark in bmark_list:
       geo = geo*pow(perf_dic[bmark][key], 1/len(bmark_list))
@@ -146,13 +152,19 @@ def set_config():
   parser.add_argument("-n", "--core-num", type=int, default=10,
                       help="Number of cores")
 
+  parser.add_argument('targets', action='append')
+
+  parser.add_argument("--clean", action='store_true')
+
   args = parser.parse_args()
   
   config = {}
+  config['args'] = args
   config['root_path'] = os.path.join(os.getcwd(), "../polybench-cuda")
 
   bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance']
   #bmark_list = ['syrk', '2mm']
+  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance', 'correlation', 'trmm', 'cholesky', 'nussinov', 'seidel-2d', 'heat-3d']
 
   config['core_num'] = args.core_num
   config['bmark_list'] = bmark_list
@@ -160,17 +172,75 @@ def set_config():
 
   config['result_path'] = os.path.join(config['root_path'], "../", "tulip-results")
 
+  results = []
+  tests = []
+  for target in args.targets:
+    print(target)
+    globals()['add_' + target](results, tests)
+
+  print('Will run', tests)
+  print('Will get results', results)
+
+  config['results'] = results
+  config['tests'] = tests
+
   return config
 
+# All:
+# results = ['seq', 'nvidia', 'nvidia.noelle', 'amd', 'amd.noelle', 'tulip.clang', 'tulip.clang.noelle', 'tulip.gcc', 'tulip.gcc.noelle', 'nvhpc.cpu', 'nvhpc.cpu.noelle', 'nvhpc.gpu', 'nvhpc.gpu.noelle']
+# tests = ['seq', 'nvidia', 'amd', 'tulip', 'nvhpc']
+def add_seq(results, tests):
+  tests.append('seq')
+  results.append('seq')
+def add_clang_nvidia(results, tests):
+  tests.append('clang_nvidia')
+  results.append('clang_nvidia')
+  results.append('clang_nvidia.noelle')
+def add_clang_amd(results, tests):
+  tests.append('clang_amd')
+  results.append('clang_amd')
+  results.append('clang_amd.noelle')
+def add_aomp_nvidia(results, tests):
+  tests.append('aomp_nvidia')
+  results.append('aomp_nvidia')
+  results.append('aomp_nvidia.noelle')
+def add_aomp_amd(results, tests):
+  tests.append('aomp_amd')
+  results.append('aomp_amd')
+  results.append('aomp_amd.noelle')
+def add_gcc_nvidia(results, tests):
+  tests.append('gcc_nvidia')
+  results.append('gcc_nvidia')
+  results.append('gcc_nvidia.noelle')
+def add_gcc_amd(results, tests):
+  tests.append('gcc_amd')
+  results.append('gcc_amd')
+  results.append('gcc_amd.noelle')
+def add_tulip(results, tests):
+  tests.append('tulip')
+  results.append('tulip.icx')
+  results.append('tulip.icx.noelle')
+  results.append('tulip.clang')
+  results.append('tulip.clang.noelle')
+  results.append('tulip.gcc')
+  results.append('tulip.gcc.noelle')
+def add_nvhpc_nvidia(results, tests):
+  tests.append('nvhpc_nvidia')
+  results.append('nvhpc.gpu')
+  results.append('nvhpc.gpu.noelle')
+def add_nvhpc_cpu(results, tests):
+  tests.append('nvhpc_cpu')
+  results.append('nvhpc.cpu')
+  results.append('nvhpc.cpu.noelle')
+
 if __name__ == "__main__":
-  results = ['seq', 'nvidia', 'nvidia.noelle', 'amd', 'amd.noelle', 'tulip.clang', 'tulip.clang.noelle', 'tulip.gcc', 'tulip.gcc.noelle', 'nvphc.cpu', 'nvhpc.cpu.noelle', 'nvhpc.gpu', 'nvhpc.gpu.noelle']
-  tests = ['seq', 'nvidia', 'amd', 'tulip', 'nvhpc']
-  #tests = ['nvidia']
-  
   config = set_config()
   if not config:
     print("Bad configuration, please start over.")
     sys.exit(1)
+
+  results = config['results']
+  tests = config['tests']
 
   print("\n\n### Experiment Start ####")
 
@@ -180,12 +250,14 @@ if __name__ == "__main__":
   os.chdir(config['result_path'])
   log_path = os.path.join(config['result_path'], "results.log")
 
-  #clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
+
+  if config['args'].clean:
+    clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
   
-  perf_list = []
   perf_dic_acc = {}
   for j in range(config['run_num']):
     perf_dic = {}
+    perf_list = []
     for bmark in config['bmark_list']:
       run_all(config['root_path'], bmark, tests)
       perf_list.append(get_time(config['root_path'], bmark, results))
@@ -195,6 +267,7 @@ if __name__ == "__main__":
 
   perf_dic = {}
   for bmark in config['bmark_list']:
+    perf_dic[bmark] = {}
     for result in results:
       perf_dic[bmark][result] = 0
   perf_dic, config['bmark_list'] = Postprocess(perf_dic_acc, perf_dic, config['bmark_list'], config['run_num'])
@@ -202,7 +275,7 @@ if __name__ == "__main__":
   print(perf_dic)
 
   os.chdir(config['result_path'])
-  with open("nvidia_omp_results.json", "w") as outfile:
+  with open("nvidia_omp_results." + socket.gethostname() + '.' + datetime.utcnow().isoformat() + ".json", "w") as outfile:
     json.dump(perf_dic, outfile)
   #Plot(perf_dic, config['bmark_list'])
     #for i, bmark in enumerate(config['bmark_list']):
