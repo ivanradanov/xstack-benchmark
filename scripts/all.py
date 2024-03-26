@@ -18,8 +18,6 @@ from collections import ChainMap
 from datetime import datetime
 
 def clean_all_bmarks(root_path, bmark_list, result_path):
-  os.chdir(result_path)
-  os.system("rm -rf *")
   for bmark in bmark_list:
     os.chdir(os.path.join(root_path, bmark))
     make_process = subprocess.Popen(["make", "clean"],
