@@ -86,7 +86,7 @@ polygeist_nvtarget.exe: ${BMARK}.cu
 
 polygeist_amd.exe: ${BMARK}.cu
 	${POLYGEIST_DIR}/bin/cgeist --std=c++17 -O3 --cuda-lower -gpu-kernel-structure-mode=block_thread_noops --enable-buffer-elim=0 -raise-scf-to-affine -resource-dir=${POLYGEIST_LLVM_DIR}/lib/clang/18/ -emit-rocm --rocm-path=${POLYGEIST_ROCM_PATH} --amd-gpu-arch=${POLYGEIST_AMD_GPU_ARCH} --cuda-gpu-arch=$(POLYGEIST_CUDA_GPU_ARCH) --cuda-path=$(POLYGEIST_CUDA_PATH) $< -c -o polyamd.o
-	clang polyamd.o -O3 -lm -o $@ -lstdc++ -L${POLYGEIST_CUDA_PATH}/lib64/ -lcudart_static -lpthread -ldl -lrt
+	clang polyamd.o -O3 -lm -o $@ -lstdc++ -L${POLYGEIST_ROCM_PATH}/lib/ -lamdhip64 -lpthread -ldl -lrt
 
 ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
