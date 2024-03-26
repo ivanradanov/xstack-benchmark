@@ -32,6 +32,8 @@ export POLYGEIST_DIR=/scr/ivan/src/Polygeist/build.release/
 export POLYGEIST_LLVM_DIR=/scr/ivan/src/Polygeist/mlir-build.release/
 export POLYGEIST_CUDA_PATH=/usr/local/cuda-11.4/
 export POLYGEIST_CUDA_GPU_ARCH=sm_80
+export POLYGEIST_ROCM_PATH=/opt/rocm/
+export POLYGEIST_AMD_GPU_ARCH=gfx90a
 
 export PATH=/home/ivan/src/xstack-benchmark/scripts:$PATH
 
