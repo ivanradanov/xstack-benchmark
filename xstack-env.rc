@@ -33,7 +33,7 @@ export POLYGEIST_LLVM_DIR=/scr/ivan/src/Polygeist/mlir-build.release/
 if [[ $(hostname) == memkf02* ]]; then
     export POLYGEIST_CUDA_PATH=/usr/local/cuda-11.4/
 elif [[ $(hostname) == memkf01* ]]; then
-    export POLYGEIST_CUDA_PATH=/scr/ivan/cuda-10.2/
+    export POLYGEIST_CUDA_PATH=/home/ivan/opt/cuda-11.4/
 fi
 export POLYGEIST_CUDA_GPU_ARCH=sm_80
 export POLYGEIST_ROCM_PATH= /opt/rocm/
