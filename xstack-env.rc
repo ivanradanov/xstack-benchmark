@@ -36,7 +36,7 @@ elif [[ $(hostname) == memkf01* ]]; then
     export POLYGEIST_CUDA_PATH=/home/ivan/opt/cuda-11.4/
 fi
 export POLYGEIST_CUDA_GPU_ARCH=sm_80
-export POLYGEIST_ROCM_PATH= /opt/rocm/
+export POLYGEIST_ROCM_PATH=/opt/rocm/
 export POLYGEIST_AMD_GPU_ARCH=gfx90a
 
 export PATH=/home/ivan/src/xstack-benchmark/scripts:$PATH
