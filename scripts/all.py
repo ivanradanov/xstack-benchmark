@@ -229,6 +229,9 @@ def add_nvhpc_nvidia(results, tests):
 def add_polygeist_nvidia(results, tests):
   tests.append('polygeist_nvidia')
   results.append('polygeist_nvidia')
+def add_polygeist_amd(results, tests):
+  tests.append('polygeist_amd')
+  results.append('polygeist_amd')
 def add_nvhpc_cpu(results, tests):
   tests.append('nvhpc_cpu')
   results.append('nvhpc.cpu')
