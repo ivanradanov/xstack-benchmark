@@ -166,11 +166,11 @@ run_nvhpc_nvidia: nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.noelle.time ./nvhpc.gpu.noelle.exe $(PERF_ARGS)
 
 run_polygeist_nvidia: polygeist_nvtarget.exe
-	regressions-watchdog $(RUN_TIMEOUT) polygeist_nvidia.time ./nvhpc.gpu.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) polygeist_nvidia.time ./polygeist_nvtarget.exe $(PERF_ARGS)
 
 run_nvhpc_cpu: nvhpc.cpu.exe nvhpc.cpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.time ./nvhpc.cpu.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.noelle.time ./nvhpc.cpu.noelle.exe $(PERF_ARGS)
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
+	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
