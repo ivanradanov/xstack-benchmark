@@ -149,7 +149,7 @@ run_hip: hip.exe
 	regressions-watchdog $(RUN_TIMEOUT) hip.time ./hip.exe $(PERF_ARGS)
 
 clean_nvtarget:
-	rm nvtarget.exe nvtarget_noelle.exe
+	rm nvtarget.exe nvtarget_noelle.exe || true
 
 run_clang_nvidia: clean_nvtarget nvtarget.exe nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_nvidia.time ./nvtarget.exe $(PERF_ARGS)
@@ -164,7 +164,7 @@ run_gcc_nvidia: gcc_nvtarget.exe gcc_nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) gcc_nvidia.noelle.time ./gcc_nvtarget_noelle.exe $(PERF_ARGS)
 
 clean_amdtarget:
-	rm amdtarget.exe amdtarget_noelle.exe
+	rm amdtarget.exe amdtarget_noelle.exe || true
 
 run_clang_amd: clean_amdtarget amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.time ./amdtarget.exe $(PERF_ARGS)
@@ -207,4 +207,4 @@ run_nvhpc_cpu: nvhpc.cpu.exe nvhpc.cpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.noelle.time ./nvhpc.cpu.noelle.exe $(PERF_ARGS)
 
 clean:
-	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
+	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe || true
