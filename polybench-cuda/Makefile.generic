@@ -121,8 +121,14 @@ seq.exe: ${BMARK}.c
 cuda.exe: ${BMARK}.cu
 	nvcc -O3 $< -o $@
 
+clang_cuda.exe: ${BMARK}.cu
+	clang -O3 $< -o $@
+
 run_seq: seq.exe
 	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
+
+run_clang_cuda: clang_cuda.exe
+	regressions-watchdog $(RUN_TIMEOUT) clang_cuda.time ./clang_cuda.exe $(PERF_ARGS)
 
 run_cuda: cuda.exe
 	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
