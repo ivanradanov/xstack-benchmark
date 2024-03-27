@@ -134,7 +134,10 @@ run_clang_cuda: clang_cuda.exe
 run_cuda: cuda.exe
 	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
 
-run_clang_nvidia: clean nvtarget.exe nvtarget_noelle.exe
+clean_nvtarget:
+	rm nvtarget.exe nvtarget_noelle.exe
+
+run_clang_nvidia: clean_nvtarget nvtarget.exe nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_nvidia.time ./nvtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) clang_nvidia.noelle.time ./nvtarget_noelle.exe $(PERF_ARGS)
 
@@ -146,7 +149,10 @@ run_gcc_nvidia: gcc_nvtarget.exe gcc_nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) gcc_nvidia.time ./gcc_nvtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) gcc_nvidia.noelle.time ./gcc_nvtarget_noelle.exe $(PERF_ARGS)
 
-run_clang_amd: clean amdtarget.exe amdtarget_noelle.exe
+clean_amdtarget:
+	rm amdtarget.exe amdtarget_noelle.exe
+
+run_clang_amd: clean_amdtarget amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.time ./amdtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
 
