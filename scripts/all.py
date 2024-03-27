@@ -187,6 +187,9 @@ def set_config():
 # All:
 # results = ['seq', 'nvidia', 'nvidia.noelle', 'amd', 'amd.noelle', 'tulip.clang', 'tulip.clang.noelle', 'tulip.gcc', 'tulip.gcc.noelle', 'nvhpc.cpu', 'nvhpc.cpu.noelle', 'nvhpc.gpu', 'nvhpc.gpu.noelle']
 # tests = ['seq', 'nvidia', 'amd', 'tulip', 'nvhpc']
+def add_cuda(results, tests):
+  tests.append('cuda')
+  results.append('cuda')
 def add_seq(results, tests):
   tests.append('seq')
   results.append('seq')
