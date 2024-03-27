@@ -190,6 +190,9 @@ def set_config():
 def add_cuda(results, tests):
   tests.append('cuda')
   results.append('cuda')
+def add_hip(results, tests):
+  tests.append('hip')
+  results.append('hip')
 def add_clang_cuda(results, tests):
   tests.append('clang_cuda')
   results.append('clang_cuda')

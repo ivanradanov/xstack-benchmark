@@ -125,6 +125,10 @@ clang_cuda.exe: ${BMARK}.cu
 	clang -O3 --std=c++17 --cuda-path=$(POLYGEIST_CUDA_PATH) --cuda-gpu-arch=$(POLYGEIST_CUDA_GPU_ARCH) -c $< -o temp.o
 	clang temp.o --std=c++17  -L${POLYGEIST_CUDA_PATH}/lib64/ -lcudart_static -lpthread -ldl -lrt -o $@
 
+hip.exe: ${BMARK}_hip.cpp
+	clang -O3 --std=c++17 -x hip --rocm-path=$(POLYGEIST_ROCM_PATH) --offload-arch=$(POLYGEIST_AMD_GPU_ARCH) -c $< -o temp.o
+	clang temp.o --std=c++17  -L$(POLYGEIST_ROCM_PATH)/lib/ -lamdhip64 -lpthread -ldl -lrt -o $@
+
 clang_hip.exe: ${BMARK}_hip.cpp
 	clang -O3 --std=c++17 -x hip --rocm-path=$(POLYGEIST_ROCM_PATH) --offload-arch=$(POLYGEIST_AMD_GPU_ARCH) -c $< -o temp.o
 	clang temp.o --std=c++17  -L$(POLYGEIST_ROCM_PATH)/lib/ -lamdhip64 -lpthread -ldl -lrt -o $@
@@ -140,6 +144,9 @@ run_clang_hip: clang_hip.exe
 
 run_cuda: cuda.exe
 	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
+
+run_hip: hip.exe
+	regressions-watchdog $(RUN_TIMEOUT) hip.time ./hip.exe $(PERF_ARGS)
 
 clean_nvtarget:
 	rm nvtarget.exe nvtarget_noelle.exe
