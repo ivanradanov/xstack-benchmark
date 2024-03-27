@@ -150,7 +150,7 @@ def set_config():
   parser.add_argument("-n", "--core-num", type=int, default=10,
                       help="Number of cores")
 
-  parser.add_argument('targets', action='append')
+  parser.add_argument('targets', nargs='+')
 
   parser.add_argument("--clean", action='store_true')
 
@@ -190,6 +190,9 @@ def set_config():
 def add_cuda(results, tests):
   tests.append('cuda')
   results.append('cuda')
+def add_clang_cuda(results, tests):
+  tests.append('clang_cuda')
+  results.append('clang_cuda')
 def add_seq(results, tests):
   tests.append('seq')
   results.append('seq')
