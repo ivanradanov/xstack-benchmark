@@ -122,7 +122,8 @@ cuda.exe: ${BMARK}.cu
 	nvcc -O3 $< -o $@
 
 clang_cuda.exe: ${BMARK}.cu
-	clang -O3 $< -o $@
+	clang -O3 --std=c++17 -L${POLYGEIST_CUDA_PATH}/lib64/ -lcudart_static -lpthread -ldl -lrt -c $< -o temp.o
+	clang temp.o --std=c++17  -L${POLYGEIST_CUDA_PATH}/lib64/ -lcudart_static -lpthread -ldl -lrt -o $@
 
 run_seq: seq.exe
 	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
