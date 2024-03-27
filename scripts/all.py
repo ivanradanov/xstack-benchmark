@@ -193,6 +193,9 @@ def add_cuda(results, tests):
 def add_clang_cuda(results, tests):
   tests.append('clang_cuda')
   results.append('clang_cuda')
+def add_clang_hip(results, tests):
+  tests.append('clang_hip')
+  results.append('clang_hip')
 def add_seq(results, tests):
   tests.append('seq')
   results.append('seq')
