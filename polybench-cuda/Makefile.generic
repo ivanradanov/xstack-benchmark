@@ -105,14 +105,10 @@ openmp.exe: ${BMARK}_omp.c
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
-<<<<<<< HEAD
-tulip.icx.noelle.exe: ${BMARK}_cpu_noelle.c
-=======
 icx.exe: ${BMARK}_cpu.c
 	icx -fopenmp -O3 $(FLAGS) $< -o $@
 
 icx.noelle.exe: ${BMARK}_cpu_noelle.c
->>>>>>> origin/main
 	icx -fopenmp -O3 $(FLAGS) $< -o $@
 
 tulip.clang.noelle.exe: ${BMARK}_cpu_noelle.c
