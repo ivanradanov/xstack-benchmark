@@ -195,14 +195,14 @@ def set_config():
 # tests = ['seq', 'nvidia', 'amd', 'tulip', 'nvhpc']
 def add_manual_nvidia(results, tests):
   tests.append('nvmanual')
-  results.append('manual.clang.gpu.time')
-  results.append('manual.nvc.gpu.time')
+  results.append('manual.clang.gpu')
+  results.append('manual.nvc.gpu')
 def add_manual_amd_clang(results, tests):
   tests.append('amdmanual')
-  results.append('manual.clang.amd.time')
+  results.append('manual.clang.amd')
 def add_manual_amd_aomp(results, tests):
   tests.append('aomp_amdmanual')
-  results.append('manual.aomp.amd.time')
+  results.append('manual.aomp.amd')
 def add_cuda(results, tests):
   tests.append('cuda')
   results.append('cuda')
