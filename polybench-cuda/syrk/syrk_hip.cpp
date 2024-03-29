@@ -126,7 +126,7 @@ int main(int argc, char** argv)
   hipMemcpy(dev_A, A, n*m*sizeof(double), hipMemcpyHostToDevice);
   hipMemcpy(dev_C, C, n*n*sizeof(double), hipMemcpyHostToDevice);
 
-  kernel(m, n, alpha, beta, C, A);
+  kernel(m, n, alpha, beta, dev_C, dev_A);
 
 
   hipMemcpy(C, dev_C, n*n*sizeof(double), hipMemcpyDeviceToHost);

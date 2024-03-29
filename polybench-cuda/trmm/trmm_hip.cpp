@@ -117,7 +117,7 @@ int main(int argc, char** argv)
   hipMemcpy(dev_A, A, n*m*sizeof(double), hipMemcpyHostToDevice);
   hipMemcpy(dev_B, B, m*n*sizeof(double), hipMemcpyHostToDevice);
   /* Run kernel. */
-  kernel(n,m, alpha, A, B);
+  kernel(n,m, alpha, dev_A, dev_B);
   hipMemcpy(B, dev_B, m*n*sizeof(double), hipMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed
