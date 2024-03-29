@@ -242,8 +242,12 @@ run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS) 
 
-run_amdmanual: manual.clang.amd.exe 
-	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS) 
+run_amdmanual: clean_amdmanual manual.clang.amd.exe
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS)
+run_aomp_amdmanual: clean_amdmanual manual.aomp.amd.exe
+	regressions-watchdog $(RUN_TIMEOUT) manual.aomp.amd.time ./manual.clang.amd.exe $(PERF_ARGS)
+clean_amdmanual:
+	rm ./manual.clang.amd.exe
 
 clean:
 	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe || true
