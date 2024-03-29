@@ -116,11 +116,9 @@ int main(int argc, char** argv)
   hipMemcpy(dev_tmp, tmp, nx*sizeof(double), hipMemcpyHostToDevice);
 
 
-  for(int i = 0; i < RUN; i++) {
   const int threadsPerBlock = 256;
   kernel3<<<num_blocks(nx, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
   kernel4<<<num_blocks(ny, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
-  }
 
   hipMemcpy(y, dev_y, ny*sizeof(double), hipMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed

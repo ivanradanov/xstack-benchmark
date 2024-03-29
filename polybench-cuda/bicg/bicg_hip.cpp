@@ -103,6 +103,7 @@ int main(int argc, char** argv)
   int n = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
+//  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(m*n*sizeof(double));
   double *s = (double*)malloc(n*sizeof(double));
@@ -126,9 +127,7 @@ int main(int argc, char** argv)
   hipMemcpy(dev_q, q, m*sizeof(double), hipMemcpyHostToDevice);
   hipMemcpy(dev_p, p, n*sizeof(double), hipMemcpyHostToDevice);
   hipMemcpy(dev_r, r, m*sizeof(double), hipMemcpyHostToDevice);
-  for(int i = 0; i < RUN; i++) {
   kernel(m,n, dev_A, dev_s, dev_q, dev_p, dev_r);
-  }
   hipMemcpy(s, dev_s, n*sizeof(double), hipMemcpyDeviceToHost);
   hipMemcpy(q, dev_q, m*sizeof(double), hipMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed
@@ -140,6 +139,7 @@ int main(int argc, char** argv)
   free((void*)q);
   free((void*)p);
   free((void*)r);
+//  }
 
   return 0;
 }

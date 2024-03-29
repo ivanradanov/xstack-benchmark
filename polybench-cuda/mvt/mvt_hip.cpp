@@ -148,10 +148,8 @@ int main(int argc, char** argv)
   hipMemcpy(dev_y_1, y_1, n * sizeof(double), hipMemcpyHostToDevice);
   hipMemcpy(dev_y_2, y_2, n * sizeof(double), hipMemcpyHostToDevice);
 
-  for(int i = 0; i < RUN; i++) {
   /* Run kernel. */
   kernel(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
-  }
 
   hipMemcpy(x1, dev_x1, n * sizeof(double), hipMemcpyDeviceToHost);
   hipMemcpy(x2, dev_x2, n * sizeof(double), hipMemcpyDeviceToHost);
