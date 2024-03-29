@@ -180,7 +180,7 @@ run_clang_nvidia: clean_nvtarget nvtarget.exe nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_nvidia.time ./nvtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) clang_nvidia.noelle.time ./nvtarget_noelle.exe $(PERF_ARGS)
 
-run_aomp_nvidia: clean_nvtarget nvtarget.exe nvtarget_noelle.exe
+run_aomp_nvidia: clean nvtarget.exe nvtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) aomp_nvidia.time ./nvtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) aomp_nvidia.noelle.time ./nvtarget_noelle.exe $(PERF_ARGS)
 
@@ -195,7 +195,7 @@ run_clang_amd: clean_amdtarget amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.time ./amdtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
 
-run_aomp_amd: clean_nvtarget amdtarget.exe amdtarget_noelle.exe
+run_aomp_amd: clean amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) aomp_amd.time ./amdtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) aomp_amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
 
@@ -242,12 +242,8 @@ run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS) 
 
-run_amdmanual: clean_amdmanual manual.clang.amd.exe
-	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS)
-run_aomp_amdmanual: clean_amdmanual manual.aomp.amd.exe
-	regressions-watchdog $(RUN_TIMEOUT) manual.aomp.amd.time ./manual.clang.amd.exe $(PERF_ARGS)
-clean_amdmanual:
-	rm ./manual.clang.amd.exe
+run_amdmanual: manual.clang.amd.exe 
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS) 
 
 clean:
 	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe || true

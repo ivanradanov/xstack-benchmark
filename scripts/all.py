@@ -164,6 +164,12 @@ def set_config():
   #bmark_list = ['syrk', '2mm']
   bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance', 'correlation', 'trmm', 'cholesky', 'nussinov', 'seidel-2d', 'heat-3d']
 
+  # nvidia manual
+  bmark_list = ['trmm', 'covariance', 'correlation', 'heat-3d']
+  # nvidia manual
+  bmark_list = ['heat-3d', 'doitgen', 'nussinov', 'cholesky']
+
+
   config['core_num'] = args.core_num
   config['bmark_list'] = bmark_list
   config['run_num'] = 1
@@ -187,6 +193,16 @@ def set_config():
 # All:
 # results = ['seq', 'nvidia', 'nvidia.noelle', 'amd', 'amd.noelle', 'tulip.clang', 'tulip.clang.noelle', 'tulip.gcc', 'tulip.gcc.noelle', 'nvhpc.cpu', 'nvhpc.cpu.noelle', 'nvhpc.gpu', 'nvhpc.gpu.noelle']
 # tests = ['seq', 'nvidia', 'amd', 'tulip', 'nvhpc']
+def add_manual_nvidia(results, tests):
+  tests.append('nvmanual')
+  results.append('manual.clang.gpu.time')
+  results.append('manual.nvc.gpu.time')
+def add_manual_amd_clang(results, tests):
+  tests.append('amdmanual')
+  results.append('manual.clang.amd.time')
+def add_manual_amd_aomp(results, tests):
+  tests.append('aomp_amdmanual')
+  results.append('manual.aomp.amd.time')
 def add_cuda(results, tests):
   tests.append('cuda')
   results.append('cuda')
