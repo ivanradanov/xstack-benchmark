@@ -43,3 +43,4 @@ export PATH=/home/ivan/src/xstack-benchmark/scripts:$PATH
 
 . enable.sh /opt/nvidia/hpc_sdk/Linux_x86_64/2024/compilers/
 . enable.sh /home/ivan/opt/intel/oneapi/compiler/2024.0/
+. enable.sh /opt/rocm/
