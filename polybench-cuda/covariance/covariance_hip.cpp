@@ -153,9 +153,9 @@ int main(int argc, char** argv)
 
 
   kernel (m, n,
-       data,
-       cov,
-       mean);
+       dev_data,
+       dev_cov,
+       dev_mean);
   hipMemcpy(cov, dev_cov, m*m*sizeof(double), hipMemcpyDeviceToHost);
 
 

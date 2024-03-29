@@ -210,7 +210,7 @@ int main(int argc, char** argv)
   hipMemcpy(dev_corr, corr, m*m*sizeof(double), hipMemcpyHostToDevice);
 
 
-  kernel(m, n, data, corr, mean, stddev);
+  kernel(m, n, dev_data, dev_corr, dev_mean, dev_stddev);
   hipMemcpy(corr, dev_corr, m*m*sizeof(double), hipMemcpyDeviceToHost);
 
 
