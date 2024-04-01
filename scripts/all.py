@@ -164,10 +164,10 @@ def set_config():
   #bmark_list = ['syrk', '2mm']
   bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance', 'correlation', 'trmm', 'cholesky', 'nussinov', 'seidel-2d', 'heat-3d']
 
-  # amd manual
-  bmark_list = ['heat-3d', 'doitgen', 'nussinov', 'cholesky']
   # nvidia manual
   bmark_list = ['trmm', 'covariance', 'correlation', 'heat-3d']
+  # amd manual
+  bmark_list = ['heat-3d', 'doitgen', 'nussinov', 'cholesky']
 
 
   config['core_num'] = args.core_num
