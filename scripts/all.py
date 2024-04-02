@@ -160,14 +160,13 @@ def set_config():
   config['args'] = args
   config['root_path'] = os.path.join(os.getcwd(), "../polybench-cuda")
 
-  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance']
-  #bmark_list = ['syrk', '2mm']
-  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance', 'correlation', 'trmm', 'cholesky', 'nussinov', 'seidel-2d', 'heat-3d']
-
   # nvidia manual
   bmark_list = ['trmm', 'covariance', 'correlation', 'heat-3d']
   # amd manual
   bmark_list = ['heat-3d', 'doitgen', 'nussinov', 'cholesky']
+
+  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv', 'lu', 'symm', 'covariance', 'correlation', 'trmm', 'cholesky', 'nussinov', 'seidel-2d', 'heat-3d']
+
 
 
   config['core_num'] = args.core_num
