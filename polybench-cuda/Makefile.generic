@@ -196,7 +196,7 @@ run_clang_amd: clean_amdtarget amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.time ./amdtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) clang_amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
 
-run_aomp_amd: clean amdtarget.exe amdtarget_noelle.exe
+run_aomp_amd: clean_amdtarget amdtarget.exe amdtarget_noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) aomp_amd.time ./amdtarget.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) aomp_amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
 
