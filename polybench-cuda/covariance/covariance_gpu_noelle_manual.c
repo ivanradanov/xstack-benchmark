@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
   cov = malloc(m * m * 8);
   _ZL10init_arrayiiPd(m, n, ((double*)data));
 ;
-#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8]) map(tofrom: cov[0:m * m * 8])
+#pragma omp target data map(to: data[0:n * m * 8]) map(alloc: mean[0:m * 8]) map(from: cov[0:m * m * 8])
 {
   _ZL6kerneliiPdS_S_(m, n, ((double*)data), ((double*)cov), ((double*)mean));
 ;
