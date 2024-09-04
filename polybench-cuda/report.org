@@ -1,0 +1,35 @@
+#+title: Report
+
+|-------------+------+--------------|
+| CUDA        | time |              |
+|-------------+------+--------------|
+| covariance  | 4:58 | unsuccessful |
+| correlation | 4:44 |              |
+| doitgen     | 2:49 |              |
+| heat-3d     | 4:25 |              |
+| nussinov    | 6:41 | unsuccessful |
+| trmm        |      |              |
+| syr2k       |      |              |
+
+|-------------+---|
+| AMD         |   |
+|-------------+---|
+| covariance  |   |
+| correlation |   |
+| doitgen     |   |
+| heat-3d     |   |
+| nussinov    |   |
+| trmm        |   |
+| syr2k       |   |
+
+
+
+|----------+---|
+| CPU      |   |
+|----------+---|
+| nussinov |   |
+| symm     |   |
+| 2mm      |   |
+| fdtd-2d  |   |
+| heat-3d  |   |
+| bicg     |   |
