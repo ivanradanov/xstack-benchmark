@@ -239,9 +239,12 @@ run_manual:  manual.clang.cpu.exe manual.gcc.cpu.exe
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.cpu.time ./manual.clang.cpu.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS) 
 
-run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
-	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS) 
+# run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
+# 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS)
+# 	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS)
+
+run_nvmanual: manual.clang.gpu.exe
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS)
 
 run_amdmanual: clean_amd_manual manual.clang.amd.exe
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS)
