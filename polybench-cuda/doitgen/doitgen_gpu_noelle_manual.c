@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
   C4 = malloc(np * np * 8);
   _ZL10init_arrayiiiPdS_(nr, nq, np, ((double*)A), ((double*)C4));
 ;
-#pragma omp target data map(to: A[0:nr * nq * np * 8], C4[0:np * np * 8]) map(tofrom: sum[0:nr * nq * np * 8])
+#pragma omp target data map(to: A[0:nr * nq * np * 8], C4[0:np * np * 8]) map(alloc: sum[0:nr * nq * np * 8])
 {
   _ZL6kerneliiiPdS_S_(nr, nq, np, ((double*)A), ((double*)C4), ((double*)sum));
 ;
@@ -230,7 +230,7 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
