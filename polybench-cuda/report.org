@@ -12,16 +12,16 @@
 |-------------+------+--------------|
 
 
-|-------------+------+--------------|
-| AMD         | time |              |
-|-------------+------+--------------|
-| covariance  | 2:22 |              |
-| correlation | 1:48 |              |
-| doitgen     | 1:42 |              |
-| heat-3d     | 1:55 |              |
-| nussinov    | 5:22 | unsuccessful |
-| syr2k       | 2:48 |              |
-|-------------+------+--------------|
+|-------------+------+--------------+----------------------------------|
+| AMD         | time |              | diff                             |
+|-------------+------+--------------+----------------------------------|
+| covariance  | 2:22 |              | 5 insertions(+), 8 deletions(-)  |
+| correlation | 1:48 |              | 7 insertions(+), 12 deletions(-) |
+| doitgen     | 1:42 |              | 4 insertions(+), 4 deletions(-)  |
+| heat-3d     | 1:55 |              | 3 insertions(+), 3 deletions(-)  |
+| nussinov    | 5:22 | unsuccessful | 1 insertion(+), 1 deletion(-)    |
+| syr2k       | 2:48 |              | 4 insertions(+), 6 deletions(-)  |
+|-------------+------+--------------+----------------------------------|
 
 #+begin_src
 {'covariance': {'manual.clang.amd': 0.3550741398, 'clang_amd': 0.6583975088, 'clang_amd.noelle': 0.6495668287999999}, 'correlation': {'manual.clang.amd': 0.3652997262, 'clang_amd': 0.6636014076000001, 'clang_amd.noelle': 0.6516129608000001}, 'doitgen': {'manual.clang.amd': 4.931537885, 'clang_amd': 33.7071555318, 'clang_amd.noelle': 33.533853305}, 'heat-3d': {'manual.clang.amd': 70.0456357706, 'clang_amd': 237.01671294200003, 'clang_amd.noelle': 236.6397407366}, 'nussinov': {'manual.clang.amd': 6.725151520999999, 'clang_amd': 6.729976101, 'clang_amd.noelle': 6.720255727}, 'syr2k': {'manual.clang.amd': 1.4500077402, 'clang_amd': 1.725978589, 'clang_amd.noelle': 1.6532513332}, 'geomean': {'manual.clang.amd': 2.7546560075785886, 'clang_amd': 5.861259008048378, 'clang_amd.noelle': 5.780759423831468}}
