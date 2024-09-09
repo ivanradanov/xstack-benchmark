@@ -1,15 +1,15 @@
 #+title: Report
 
-|-------------+------+--------------|
-| CUDA        | time |              |
-|-------------+------+--------------|
-| covariance  | 4:58 | unsuccessful |
-| correlation | 4:44 |              |
-| doitgen     | 2:49 |              |
-| heat-3d     | 4:25 |              |
-| nussinov    | 6:41 | unsuccessful |
-| syr2k       | 5:31 | unsuccessful |
-|-------------+------+--------------|
+|-------------+------+--------------+----------------------------------|
+| CUDA        | time |              | diff                             |
+|-------------+------+--------------+----------------------------------|
+| covariance  | 4:58 | unsuccessful | 1 insertion(+), 1 deletion(-)    |
+| correlation | 4:44 |              | 6 insertions(+), 11 deletions(-) |
+| doitgen     | 2:49 |              | 2 insertions(+), 2 deletions(-)  |
+| heat-3d     | 4:25 |              | 2 insertions(+), 2 deletions(-)  |
+| nussinov    | 6:41 | unsuccessful | 1 insertion(+), 2 deletions(-)   |
+| syr2k       | 5:31 | unsuccessful | 4 insertions(+), 6 deletions(-)  |
+|-------------+------+--------------+----------------------------------|
 
 #+begin_src
 {'covariance': {'manual.clang.gpu': 2.0653527494, 'clang_nvidia.noelle': 2.0183927356}, 'correlation': {'manual.clang.gpu': 1.2173890842000001, 'clang_nvidia.noelle': 2.0754128544}, 'doitgen': {'manual.clang.gpu': 2.0990895468, 'clang_nvidia.noelle': 6.3265149198}, 'heat-3d': {'manual.clang.gpu': nan, 'clang_nvidia.noelle': 41.324199706}, 'nussinov': {'manual.clang.gpu': 30.799648613800002, 'clang_nvidia.noelle': 11.633073680199999}, 'syr2k': {'manual.clang.gpu': 1.949063682, 'clang_nvidia.noelle': 1.6605967376}, 'geomean': {'manual.clang.gpu': nan, 'clang_nvidia.noelle': 5.2590379410825765}}
