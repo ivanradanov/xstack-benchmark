@@ -163,7 +163,7 @@ int main(int argc, char ** argv) {
   corr = malloc(m * m * 8);
   _ZL10init_arrayiiPd(m, n, ((double*)data));
 ;
-#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8], stddev[0:m * 8]) map(tofrom: corr[0:m * m * 8])
+#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8], stddev[0:m * 8]) map(from: corr[0:m * m * 8])
 {
   _ZL6kerneliiPdS_S_S_(m, n, ((double*)data), ((double*)corr), ((double*)mean), ((double*)stddev));
 ;
@@ -184,7 +184,7 @@ void _ZL10init_arrayiiPd(uint32_t m, uint32_t n, double* data) {
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
+#pragma omp parallel for  collapse(2)
 for(int64_t i = 0; i < m;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -259,10 +259,9 @@ void _ZL6kerneliiPdS_S_S_(uint32_t m, uint32_t n, double* data, double* corr, do
   agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z11kernel_meaniiPdS_S_S__OC_2(m, n, data, corr, mean, stddev, call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -277,10 +276,9 @@ _Z11kernel_meaniiPdS_S_S__OC_2(m, n, data, corr, mean, stddev, call, 1, 1, 256, 
   agg_2e_tmp5.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < call4;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z13kernel_stddeviiPdS_S_S__OC_3(m, n, data, corr, mean, stddev, call4, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -298,12 +296,11 @@ _Z13kernel_stddeviiPdS_S_S__OC_3(m, n, data, corr, mean, stddev, call4, 1, 1, 25
   memcpy(((uint8_t*)(&agg_2e_tmp13)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp12_2e_coerce)), ((uint8_t*)(&agg_2e_tmp12)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp13_2e_coerce)), ((uint8_t*)(&agg_2e_tmp13)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma omp target teams distribute parallel for collapse(4)
 
 for(int32_t i = 0; i < 8;   i = i + 1){
 
 for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < call10;   k = k + 1){
 
@@ -322,10 +319,9 @@ _Z13kernel_reduceiiPdS_S_S__OC_4(m, n, data, corr, mean, stddev, 8, 32, 1, call1
   agg_2e_tmp19.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&agg_2e_tmp18)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&agg_2e_tmp19)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < 256;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < call20;   j = j + 1){
 _Z11kernel_diagiiPdS_S_S__OC_5(m, n, data, corr, mean, stddev, 256, 1, 1, call20, 1, 1, i, 0, 0, j, 0, 0);
@@ -343,12 +339,11 @@ _Z11kernel_diagiiPdS_S_S__OC_5(m, n, data, corr, mean, stddev, 256, 1, 1, call20
   memcpy(((uint8_t*)(&agg_2e_tmp33)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp32_2e_coerce)), ((uint8_t*)(&agg_2e_tmp32)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma omp target teams distribute parallel for collapse(4)
 
 for(int32_t i = 0; i < 8;   i = i + 1){
 
 for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < call28;   k = k + 1){
 
