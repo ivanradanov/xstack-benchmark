@@ -15,7 +15,7 @@ typedef unsigned char bool;
 #if defined(__GNUC__)
 #define  __ATTRIBUTELIST__(x) __attribute__(x)
 #else
-#define  __ATTRIBUTELIST__(x)
+#define  __ATTRIBUTELIST__(x)  
 #endif
 
 #ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
   C4 = malloc(np * np * 8);
   _ZL10init_arrayiiiPdS_(nr, nq, np, ((double*)A), ((double*)C4));
 ;
-#pragma omp target data map(to: A[0:nr * nq * np * 8], C4[0:np * np * 8]) map(from: sum[0:nr * nq * np * 8])
+#pragma omp target data map(to: A[0:nr * nq * np * 8], C4[0:np * np * 8]) map(tofrom: sum[0:nr * nq * np * 8])
 {
   _ZL6kerneliiiPdS_S_(nr, nq, np, ((double*)A), ((double*)C4), ((double*)sum));
 ;
@@ -176,20 +176,20 @@ void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, do
   int64_t j;
   int64_t k;
 
-#pragma omp parallel for
-for(int64_t i = 0; i < nr;   ++i){
+#pragma omp parallel for 
+for(int64_t i = 0; i < nr;   i = i + 1){
 
-for(int64_t j = 0; j < nq;   ++j){
+for(int64_t j = 0; j < nq;   j = j + 1){
 
-for(int64_t k = 0; k < np;   ++k){
+for(int64_t k = 0; k < np;   k = k + 1){
   A[((i * np * nq + j * nq) + k)] = ((((double)(i) * (double)(j)) + (double)(k)) / (double)(np));
 }
 }
 }
-#pragma omp parallel for
-for(int64_t i = 0; i < np;   ++i){
+#pragma omp parallel for 
+for(int64_t i = 0; i < np;   i = i + 1){
 
-for(int64_t j = 0; j < np;   ++j){
+for(int64_t j = 0; j < np;   j = j + 1){
   C4[(i * np + j)] = (((double)(i) * (double)(j)) / (double)(np));
 }
 }
@@ -230,18 +230,17 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp target teams distribute collapse(2) thread_limit(216)
+#pragma omp target teams distribute collapse(2)
 
-for(int32_t i = 0; i < call;   ++i){
+for(int32_t i = 0; i < call;   i = i + 1){
 
-for(int32_t j = 0; j < call1;   ++j){
+for(int32_t j = 0; j < call1;   j = j + 1){
 
-for(int32_t k = 0; k < call2;   ++k){
+for(int32_t k = 0; k < call2;   k = k + 1){
 
-#pragma omp parallel for collapse(2)
-for(int32_t l = 0; l < 8;   ++l){
+for(int32_t l = 0; l < 8;   l = l + 1){
 
-for(int32_t m = 0; m < 32;   ++m){
+for(int32_t m = 0; m < 32;   m = m + 1){
 _Z10kernel_sumiiiPdS_S__OC_1(nr, nq, np, A, C4, sum, call, call1, call2, 1, 8, 32, i, j, k, 0, l, m);
 }
 }
@@ -259,11 +258,11 @@ void _ZL11print_arrayiiiPd(uint32_t nr, uint32_t nq, uint32_t np, double* A) {
   int32_t call18;
 
 
-for(int64_t i = 0; i < nr;   ++i){
+for(int64_t i = 0; i < nr;   i = i + 1){
 
-for(int64_t j = 0; j < nq;   ++j){
+for(int64_t j = 0; j < nq;   j = j + 1){
 
-for(int64_t k = 0; k < np;   ++k){
+for(int64_t k = 0; k < np;   k = k + 1){
   uint32_t call = fprintf(stderr, _OC_str, A[((i * nq * np + j * nq) + k)]);
   if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
@@ -296,7 +295,7 @@ void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t nr, uint32_t nq, uint32_t np, double*
   sum[((r * nq + q) * np + p)] = 0;
   dot = 0;
 
-for(int64_t s = 0; s < np;   ++s){
+for(int64_t s = 0; s < np;   s = s + 1){
   dot = (dot + (A[((r * nq + q) * np + s)] * C4[(s * np + p)]));
 }
   sum[((r * nq + q) * np + p)] = dot;
