@@ -1,3 +1,0 @@
-regressions-watchdog 1200  polygeist_nvidia.time ./polygeist_nvtarget.exe 0 4000 4000
-'cudaLaunchKernel(function, dim3(gridX, gridY, gridZ), dim3(blockX, blockY, blockZ), params, smem, stream)' failed with 'invalid configuration argument'
-'cudaLaunchKernel(function, dim3(gridX, gridY, gridZ), dim3(blockX, blockY, blockZ), params, smem, stream)' failed with 'invalid configuration argument'

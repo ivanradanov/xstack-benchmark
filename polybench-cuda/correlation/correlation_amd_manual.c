@@ -15,7 +15,7 @@ typedef unsigned char bool;
 #if defined(__GNUC__)
 #define  __ATTRIBUTELIST__(x) __attribute__(x)
 #else
-#define  __ATTRIBUTELIST__(x)  
+#define  __ATTRIBUTELIST__(x)
 #endif
 
 #ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
@@ -97,12 +97,12 @@ uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, voi
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 double sqrt(double);
 double sqrt_OC_1(double);
-void _Z11kernel_meaniiPdS_S_S__OC_2(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z13kernel_stddeviiPdS_S_S__OC_3(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z13kernel_reduceiiPdS_S_S__OC_4(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z11kernel_diagiiPdS_S_S__OC_5(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z11kernel_meaniiPdS_S_S__OC_2(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z13kernel_stddeviiPdS_S_S__OC_3(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z13kernel_reduceiiPdS_S_S__OC_4(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z11kernel_diagiiPdS_S_S__OC_5(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z11kernel_corriiPdS_S_S__OC_6(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z11kernel_tailiiPdS_S_S__OC_7(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z11kernel_tailiiPdS_S_S__OC_7(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -163,7 +163,7 @@ int main(int argc, char ** argv) {
   corr = malloc(m * m * 8);
   _ZL10init_arrayiiPd(m, n, ((double*)data));
 ;
-#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8], stddev[0:m * 8]) map(tofrom: corr[0:m * m * 8])
+#pragma omp target data map(to: data[0:n * m * 8]) map(alloc:  mean[0:m * 8], stddev[0:m * 8]) map(from: corr[0:m * m * 8])
 {
   _ZL6kerneliiPdS_S_S_(m, n, ((double*)data), ((double*)corr), ((double*)mean), ((double*)stddev));
 ;
@@ -184,10 +184,10 @@ void _ZL10init_arrayiiPd(uint32_t m, uint32_t n, double* data) {
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
-for(int64_t i = 0; i < m;   i = i + 1){
+#pragma omp parallel for
+for(int64_t i = 0; i < m;   ++i){
 
-for(int64_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   ++j){
   data[(i * n + j)] = (((double)(i) * (double)(j)) / 1000);
 }
 }
@@ -196,181 +196,58 @@ for(int64_t j = 0; j < n;   j = j + 1){
 
 
 void _ZL6kerneliiPdS_S_S_(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev) {
-  struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp1;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp1_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp3;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp5;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp3_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp5_2e_coerce;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp12;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp13;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp12_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp13_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp18;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp19;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp18_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp19_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp32;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp33;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp32_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp33_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp38;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp39;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp38_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp39_2e_coerce;    /* Address-exposed local */
-  int32_t call;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint32_t i;
-  uint32_t j;
-  int32_t call4;
-  uint8_t* _3;
-  uint8_t* _4;
-  int32_t call10;
-  int32_t call11;
-  uint8_t* _5;
-  uint8_t* _6;
-  uint8_t* _7;
-  uint8_t* _8;
-  uint32_t k;
-  uint32_t l;
-  int32_t call20;
-  uint8_t* _9;
-  uint8_t* _10;
   int32_t call28;
   int32_t call31;
-  uint8_t* _11;
-  uint8_t* _12;
-  uint8_t* _13;
-  uint8_t* _14;
-  uint8_t* _15;
-  uint8_t* _16;
 
-  call = _ZL10num_blocksii(m, 256);
-  agg_2e_tmp.field0 = call;
-  agg_2e_tmp.field1 = 1;
-  agg_2e_tmp.field2 = 1;
-  agg_2e_tmp1.field0 = 256;
-  agg_2e_tmp1.field1 = 1;
-  agg_2e_tmp1.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for thread_limit(256)
 
-for(int32_t i = 0; i < call;   i = i + 1){
-#pragma omp parallel for
+for(int32_t i = 0; i < m;   ++i){
+//#pragma omp parallel for
 
-for(int32_t j = 0; j < 256;   j = j + 1){
-_Z11kernel_meaniiPdS_S_S__OC_2(m, n, data, corr, mean, stddev, call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+_Z11kernel_meaniiPdS_S_S__OC_2(m, n, data, corr, mean, stddev, i);
+//}
+//#pragma omp target teams distribute parallel for
+//
+//for(int32_t i = 0; i < m;   ++i){
+////#pragma omp parallel for
+
+_Z13kernel_stddeviiPdS_S_S__OC_3(m, n, data, corr, mean, stddev, i);
+}
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(256)
+
+for(int32_t i = 0; i < n;   ++i){
+
+for(int32_t j = 0; j < m;   ++j){
+
+_Z13kernel_reduceiiPdS_S_S__OC_4(m, n, data, corr, mean, stddev, i, j);
 }
 }
-  call4 = _ZL10num_blocksii(m, 256);
-  agg_2e_tmp3.field0 = call4;
-  agg_2e_tmp3.field1 = 1;
-  agg_2e_tmp3.field2 = 1;
-  agg_2e_tmp5.field0 = 256;
-  agg_2e_tmp5.field1 = 1;
-  agg_2e_tmp5.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for thread_limit(256)
 
-for(int32_t i = 0; i < call4;   i = i + 1){
-#pragma omp parallel for
+for(int32_t i = 0; i < m;   ++i){
 
-for(int32_t j = 0; j < 256;   j = j + 1){
-_Z13kernel_stddeviiPdS_S_S__OC_3(m, n, data, corr, mean, stddev, call4, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
-}
+_Z11kernel_diagiiPdS_S_S__OC_5(m, n, data, corr, mean, stddev, i);
 }
   block.field0 = 8;
   block.field1 = 32;
-  block.field2 = 1;
-  call10 = _ZL10num_blocksii(n, block.field0);
-  call11 = _ZL10num_blocksii(m, block.field1);
-  grid.field0 = call10;
-  grid.field1 = call11;
-  grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp12)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp13)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp12_2e_coerce)), ((uint8_t*)(&agg_2e_tmp12)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp13_2e_coerce)), ((uint8_t*)(&agg_2e_tmp13)), 12);
-#pragma omp target teams distribute collapse(2)
-
-for(int32_t i = 0; i < 8;   i = i + 1){
-
-for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
-
-for(int32_t k = 0; k < call10;   k = k + 1){
-
-for(int32_t l = 0; l < call11;   l = l + 1){
-_Z13kernel_reduceiiPdS_S_S__OC_4(m, n, data, corr, mean, stddev, 8, 32, 1, call10, call11, 1, i, j, 0, k, l, 0);
-}
-}
-}
-}
-  agg_2e_tmp18.field0 = 256;
-  agg_2e_tmp18.field1 = 1;
-  agg_2e_tmp18.field2 = 1;
-  call20 = _ZL10num_blocksii(m, 256);
-  agg_2e_tmp19.field0 = call20;
-  agg_2e_tmp19.field1 = 1;
-  agg_2e_tmp19.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&agg_2e_tmp18)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&agg_2e_tmp19)), 12);
-#pragma omp target teams distribute
-
-for(int32_t i = 0; i < 256;   i = i + 1){
-#pragma omp parallel for
-
-for(int32_t j = 0; j < call20;   j = j + 1){
-_Z11kernel_diagiiPdS_S_S__OC_5(m, n, data, corr, mean, stddev, 256, 1, 1, call20, 1, 1, i, 0, 0, j, 0, 0);
-}
-}
-  block.field0 = 8;
-  block.field1 = 32;
-  block.field2 = 1;
   call28 = _ZL10num_blocksii((m - 1), block.field0);
   call31 = _ZL10num_blocksii((m - 1), block.field1);
-  grid.field0 = call28;
-  grid.field1 = call31;
-  grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp32)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp33)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp32_2e_coerce)), ((uint8_t*)(&agg_2e_tmp32)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(256)
 
-for(int32_t i = 0; i < 8;   i = i + 1){
+for(int32_t k = 0; k < call28;   ++k){
 
-for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
+for(int32_t l = 0; l < call31;   ++l){
 
-for(int32_t k = 0; k < call28;   k = k + 1){
+for(int32_t i = 0; i < 8;   ++i){
 
-for(int32_t l = 0; l < call31;   l = l + 1){
+for(int32_t j = 0; j < 32;   ++j){
 _Z11kernel_corriiPdS_S_S__OC_6(m, n, data, corr, mean, stddev, 8, 32, 1, call28, call31, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
-  agg_2e_tmp38.field0 = 1;
-  agg_2e_tmp38.field1 = 1;
-  agg_2e_tmp38.field2 = 1;
-  agg_2e_tmp39.field0 = 1;
-  agg_2e_tmp39.field1 = 1;
-  agg_2e_tmp39.field2 = 1;
-  _15 = memcpy(((uint8_t*)(&agg_2e_tmp38_2e_coerce)), ((uint8_t*)(&agg_2e_tmp38)), 12);
-  _16 = memcpy(((uint8_t*)(&agg_2e_tmp39_2e_coerce)), ((uint8_t*)(&agg_2e_tmp39)), 12);
-  ;
-  if (0) {
-  } else {
-_Z11kernel_tailiiPdS_S_S__OC_7(m, n, data, corr, mean, stddev, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
-  }
+_Z11kernel_tailiiPdS_S_S__OC_7(m, n, data, corr, mean, stddev);
   return;
 }
 
@@ -381,9 +258,9 @@ void _ZL11print_arrayiPd(uint32_t m, double* corr) {
   int32_t call11;
 
 
-for(int64_t i = 0; i < m;   i = i + 1){
+for(int64_t i = 0; i < m;   ++i){
 
-for(int64_t j = 0; j < m;   j = j + 1){
+for(int64_t j = 0; j < m;   ++j){
   uint32_t call = fprintf(stderr, _OC_str, corr[(i * m + j)]);
   if ((int)(i * m + j) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
@@ -399,33 +276,33 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z11kernel_meaniiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  int64_t j;
+void _Z11kernel_meaniiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t j) {
+  //int64_t j;
   int64_t i;
 
-  j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  if (j < m) {
+  //j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  //if (j < m) {
   mean[j] = 0;
 
-for(int64_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   ++i){
   mean[j] = (mean[j] + data[(i * m + j)]);
 }
   mean[j] = (mean[j] / (double)(n));
-  }
+  //}
   return;
 }
 
 
-void _Z13kernel_stddeviiPdS_S_S__OC_3(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  int64_t j;
+void _Z13kernel_stddeviiPdS_S_S__OC_3(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t j) {
+  //int64_t j;
   int64_t i;
   double _17;
 
-  j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  if (j < m) {
+  //j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  //if (j < m) {
   stddev[j] = 0;
 
-for(int64_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   ++i){
   stddev[j] = (stddev[j] + ((data[(i * m + j)] - mean[j]) * (data[(i * m + j)] - mean[j])));
 }
   stddev[j] = (stddev[j] / (double)(n));
@@ -434,36 +311,32 @@ for(int64_t i = 0; i < n;   i = i + 1){
   if (llvm_fcmp_ole(stddev[j], 0.10000000000000001)) {
   stddev[j] = 1;
   }
-  }
+  //}
   return;
 }
 
 
-void _Z13kernel_reduceiiPdS_S_S__OC_4(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  int32_t i;
-  int64_t j;
+void _Z13kernel_reduceiiPdS_S_S__OC_4(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t i, uint32_t j) {
+  //int32_t i;
+  //int64_t j;
   double _18;
 
-  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
-  if (i < n) {
-  if (j < m) {
+  //i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  //j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
+  //if (i < n) {
+  //if (j < m) {
   data[(i * m + j)] = (data[(i * m + j)] - mean[j]);
   _18 = sqrt((double)(n));
   data[(i * m + j)] = (data[(i * m + j)] / (_18 * stddev[j]));
-  }
-  }
+  //}
+  //}
   return;
 }
 
 
-void _Z11kernel_diagiiPdS_S_S__OC_5(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  int32_t i;
+void _Z11kernel_diagiiPdS_S_S__OC_5(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t i) {
 
-  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  if (i < m) {
   corr[(i * m + i)] = 1;
-  }
   return;
 }
 
@@ -479,7 +352,7 @@ void _Z11kernel_corriiPdS_S_S__OC_6(uint32_t m, uint32_t n, double* data, double
   if (j < m) {
   corr[(i * m + j)] = 0;
 
-for(int64_t k = 0; k < n;   k = k + 1){
+for(int64_t k = 0; k < n;   ++k){
   corr[(i * m + j)] = (corr[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));
 }
   corr[(j * m + i)] = corr[(i * m + j)];
@@ -489,7 +362,7 @@ for(int64_t k = 0; k < n;   k = k + 1){
 }
 
 
-void _Z11kernel_tailiiPdS_S_S__OC_7(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+void _Z11kernel_tailiiPdS_S_S__OC_7(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev) {
   corr[(((m - 1) * m + m) - 1)] = 1;
 }
 
