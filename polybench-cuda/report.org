@@ -11,6 +11,11 @@
 | syr2k       | 5:31 | unsuccessful |
 |-------------+------+--------------|
 
+#+begin_src
+{'covariance': {'manual.clang.gpu': 2.0653527494, 'clang_nvidia.noelle': 2.0183927356}, 'correlation': {'manual.clang.gpu': 1.2173890842000001, 'clang_nvidia.noelle': 2.0754128544}, 'doitgen': {'manual.clang.gpu': 2.0990895468, 'clang_nvidia.noelle': 6.3265149198}, 'heat-3d': {'manual.clang.gpu': nan, 'clang_nvidia.noelle': 41.324199706}, 'nussinov': {'manual.clang.gpu': 30.799648613800002, 'clang_nvidia.noelle': 11.633073680199999}, 'syr2k': {'manual.clang.gpu': 1.949063682, 'clang_nvidia.noelle': 1.6605967376}, 'geomean': {'manual.clang.gpu': nan, 'clang_nvidia.noelle': 5.2590379410825765}}
+#+end_src
+
+
 
 |-------------+------+--------------+----------------------------------|
 | AMD         | time |              | diff                             |
