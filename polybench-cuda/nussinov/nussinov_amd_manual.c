@@ -182,7 +182,7 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* table, double* oldtable, double*
   int64_t i;
   uint64_t j;
 
-#pragma omp parallel for 
+#pragma omp parallel for  collapse(2)
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
