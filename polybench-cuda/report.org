@@ -23,6 +23,11 @@
 | syr2k       | 2:48 |              |
 |-------------+------+--------------|
 
+#+begin_src
+{'covariance': {'manual.clang.amd': 0.3550741398, 'clang_amd': 0.6583975088, 'clang_amd.noelle': 0.6495668287999999}, 'correlation': {'manual.clang.amd': 0.3652997262, 'clang_amd': 0.6636014076000001, 'clang_amd.noelle': 0.6516129608000001}, 'doitgen': {'manual.clang.amd': 4.931537885, 'clang_amd': 33.7071555318, 'clang_amd.noelle': 33.533853305}, 'heat-3d': {'manual.clang.amd': 70.0456357706, 'clang_amd': 237.01671294200003, 'clang_amd.noelle': 236.6397407366}, 'nussinov': {'manual.clang.amd': 6.725151520999999, 'clang_amd': 6.729976101, 'clang_amd.noelle': 6.720255727}, 'syr2k': {'manual.clang.amd': 1.4500077402, 'clang_amd': 1.725978589, 'clang_amd.noelle': 1.6532513332}, 'geomean': {'manual.clang.amd': 2.7546560075785886, 'clang_amd': 5.861259008048378, 'clang_amd.noelle': 5.780759423831468}}
+#+end_src
+
+
 
 |----------+---|
 | CPU      |   |

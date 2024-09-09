@@ -167,6 +167,8 @@ def set_config():
   # nvidia manual
   bmark_list = list(set(['trmm', 'covariance', 'correlation', 'heat-3d'] +[ 'covariance', 'correlation', 'trmm', 'heat-3d', 'nussinov', 'doitgen'] ))
 
+  # new manual
+  bmark_list = ['covariance', 'correlation', 'doitgen', 'heat-3d', 'nussinov', 'syr2k']
 
 
 
@@ -196,7 +198,7 @@ def set_config():
 def add_manual_nvidia(results, tests):
   tests.append('nvmanual')
   results.append('manual.clang.gpu')
-  results.append('manual.nvc.gpu')
+  #results.append('manual.nvc.gpu')
 def add_manual_amd_clang(results, tests):
   tests.append('amdmanual')
   results.append('manual.clang.amd')
@@ -220,7 +222,7 @@ def add_seq(results, tests):
   results.append('seq')
 def add_clang_nvidia(results, tests):
   tests.append('clang_nvidia')
-  results.append('clang_nvidia')
+  #results.append('clang_nvidia')
   results.append('clang_nvidia.noelle')
 def add_clang_amd(results, tests):
   tests.append('clang_amd')
