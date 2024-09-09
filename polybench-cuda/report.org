@@ -8,21 +8,17 @@
 | doitgen     | 2:49 |              |
 | heat-3d     | 4:25 |              |
 | nussinov    | 6:41 | unsuccessful |
-| trmm        |      |              |
-| syr2k       |      |              |
+| syr2k       | 5:31 | unsuccessful |
 
-|-------------+---|
-| AMD         |   |
-|-------------+---|
-| covariance  |   |
-| correlation |   |
-| doitgen     |   |
-| heat-3d     |   |
-| nussinov    |   |
-| trmm        |   |
-| syr2k       |   |
-
-
+|-------------+-----+---|
+| AMD         | tim |   |
+|-------------+-----+---|
+| covariance  |     |   |
+| correlation |     |   |
+| doitgen     |     |   |
+| heat-3d     |     |   |
+| nussinov    |     |   |
+| syr2k       |     |   |
 
 |----------+---|
 | CPU      |   |
