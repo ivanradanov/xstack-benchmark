@@ -1,0 +1,2 @@
+regressions-watchdog 1200  manual.clang.gpu.time ./manual.clang.gpu.exe 0 4000 4000 
+regressions-watchdog 1200  manual.nvc.gpu.time ./manual.nvc.gpu.exe 0 4000 4000 

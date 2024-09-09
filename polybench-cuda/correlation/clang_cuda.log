@@ -1,0 +1,1 @@
+regressions-watchdog 1200  clang_cuda.time ./clang_cuda.exe 0 4000 4000

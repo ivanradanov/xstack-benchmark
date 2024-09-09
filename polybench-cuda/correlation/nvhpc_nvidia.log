@@ -1,0 +1,2 @@
+regressions-watchdog 1200  nvhpc.gpu.time ./nvhpc.gpu.exe 0 4000 4000
+regressions-watchdog 1200  nvhpc.gpu.noelle.time ./nvhpc.gpu.noelle.exe 0 4000 4000

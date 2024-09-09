@@ -1,0 +1,1 @@
+regressions-watchdog 1200  cuda.time ./cuda.exe 0 4000 4000

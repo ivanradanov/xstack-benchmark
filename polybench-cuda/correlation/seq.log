@@ -1,0 +1,2 @@
+clang -O3 -lm correlation.c -o seq.exe
+regressions-watchdog 1200  seq.time ./seq.exe 0 4000 4000
