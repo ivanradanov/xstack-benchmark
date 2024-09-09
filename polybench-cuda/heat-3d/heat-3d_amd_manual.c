@@ -15,7 +15,7 @@ typedef unsigned char bool;
 #if defined(__GNUC__)
 #define  __ATTRIBUTELIST__(x) __attribute__(x)
 #else
-#define  __ATTRIBUTELIST__(x)
+#define  __ATTRIBUTELIST__(x)  
 #endif
 
 #ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
@@ -171,12 +171,12 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   uint64_t j;
   uint64_t k;
 
-#pragma omp parallel for collapse(2)
-for(int64_t i = 0; i < n;   ++i){
+#pragma omp parallel for 
+for(int64_t i = 0; i < n;   i = i + 1){
 
-for(int64_t j = 0; j < n;   ++j){
+for(int64_t j = 0; j < n;   j = j + 1){
 
-for(int64_t k = 0; k < n;   ++k){
+for(int64_t k = 0; k < n;   k = k + 1){
   A[((i * n + j) * n + k)] = ((((double)(i) + (double)(j)) + (double)(k)) / (double)(n));
   B[((i * n + j) * n + k)] = (((((double)(i) + (double)(j)) + (double)(k)) + 1) / (double)(n));
 }
@@ -205,7 +205,7 @@ void _ZL6kerneliiPdS_(uint32_t tsteps, uint32_t iter, double* A, double* B) {
   uint32_t n;
 
 
-for(int32_t t = 1; t <= tsteps;   ++t){
+for(int32_t t = 1; t <= tsteps;   t = t + 1){
   block.field0 = 1;
   block.field1 = 8;
   block.field2 = 32;
@@ -221,16 +221,15 @@ for(int32_t t = 1; t <= tsteps;   ++t){
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
 #pragma omp target teams distribute collapse(2)
 
-for(int32_t j = 0; j < call;   ++j){
+for(int32_t j = 0; j < call;   j = j + 1){
 
-for(int32_t k = 0; k < call2;   ++k){
+for(int32_t k = 0; k < call2;   k = k + 1){
 
-for(int32_t l = 0; l < call4;   ++l){
+for(int32_t l = 0; l < call4;   l = l + 1){
 
-#pragma omp parallel for collapse(2)
-for(int32_t m = 0; m < 8;   ++m){
+for(int32_t m = 0; m < 8;   m = m + 1){
 
-for(int32_t n = 0; n < 32;   ++n){
+for(int32_t n = 0; n < 32;   n = n + 1){
 _Z14kernel_stenciliPdS__OC_1(iter, A, B, call, call2, call4, 1, 8, 32, j, k, l, 0, m, n);
 }
 }
@@ -243,16 +242,15 @@ _Z14kernel_stenciliPdS__OC_1(iter, A, B, call, call2, call4, 1, 8, 32, j, k, l, 
   memcpy(((uint8_t*)(&agg_2e_tmp8_2e_coerce)), ((uint8_t*)(&agg_2e_tmp8)), 12);
 #pragma omp target teams distribute collapse(2)
 
-for(int32_t j = 0; j < call;   ++j){
+for(int32_t j = 0; j < call;   j = j + 1){
 
-for(int32_t k = 0; k < call2;   ++k){
+for(int32_t k = 0; k < call2;   k = k + 1){
 
-for(int32_t l = 0; l < call4;   ++l){
+for(int32_t l = 0; l < call4;   l = l + 1){
 
-#pragma omp parallel for collapse(2)
-for(int32_t m = 0; m < 8;   ++m){
+for(int32_t m = 0; m < 8;   m = m + 1){
 
-for(int32_t n = 0; n < 32;   ++n){
+for(int32_t n = 0; n < 32;   n = n + 1){
 _Z14kernel_stenciliPdS__OC_1(iter, B, A, call, call2, call4, 1, 8, 32, j, k, l, 0, m, n);
 }
 }
@@ -271,11 +269,11 @@ void _ZL11print_arrayiPd(uint32_t n, double* A) {
   int32_t call21;
 
 
-for(int64_t i = 0; i < n;   ++i){
+for(int64_t i = 0; i < n;   i = i + 1){
 
-for(int64_t j = 0; j < n;   ++j){
+for(int64_t j = 0; j < n;   j = j + 1){
 
-for(int64_t k = 0; k < n;   ++k){
+for(int64_t k = 0; k < n;   k = k + 1){
   uint32_t call = fprintf(stderr, _OC_str, A[((i * n + j) * n + k)]);
   if ((int)((i * n + j) * n + k) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
