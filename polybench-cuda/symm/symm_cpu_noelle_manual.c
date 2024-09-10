@@ -173,9 +173,7 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t ni, uint32_t nj, double* C, double* A, d
   int64_t i;
   int64_t j;
 
-#pragma omp parallel
-  {
-#pragma omp for collapse(2)
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -184,12 +182,11 @@ for(int64_t j = 0; j < nj;   j = j + 1){
   tmp[(i * nj + j)] = 0;
 }
 }
-#pragma omp for collapse(2) 
+#pragma omp parallel for 
 for(int64_t i = 0; i < nj;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   A[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
-}
 }
 }
   return;
@@ -239,10 +236,14 @@ void _ZL6kerneliiddPdS_S_S_(uint32_t m, uint32_t n, double alpha, double beta, d
   block.field2 = 1;
   call = _ZL10num_blocksii(m, block.field0);
   call1 = _ZL10num_blocksii(n, block.field1);
-  call19 = _ZL10num_blocksii((m - 1), block.field0);
-#pragma omp parallel
-  {
-#pragma omp for collapse(2) schedule(dynamic,4)
+  grid.field0 = call;
+  grid.field1 = call1;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
+#pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
@@ -255,29 +256,52 @@ _Z10kernel_tmpiiddPdS_S_S__OC_1(m, n, alpha, beta, C, A, B, tmp, call, call1, 1,
 }
 }
 }
-#pragma omp for collapse(2) schedule(dynamic,4)
-for(int32_t i = 0; i < call;   i = i + 1){
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  call7 = _ZL10num_blocksii(m, block.field0);
+  call9 = _ZL10num_blocksii(n, block.field1);
+  grid.field0 = call7;
+  grid.field1 = call9;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp10)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp11)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp11_2e_coerce)), ((uint8_t*)(&agg_2e_tmp11)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t i = 0; i < call7;   i = i + 1){
 
-for(int32_t j = 0; j < call1;   j = j + 1){
+for(int32_t j = 0; j < call9;   j = j + 1){
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z8kernel_CiiddPdS_S_S__OC_2(m, n, alpha, beta, C, A, B, tmp, call, call1, 1, 8, 32, 1, i, j, 0, k, l, 0);
+_Z8kernel_CiiddPdS_S_S__OC_2(m, n, alpha, beta, C, A, B, tmp, call7, call9, 1, 8, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
-#pragma omp for collapse(2) schedule(dynamic,4)
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  call19 = _ZL10num_blocksii((m - 1), block.field0);
+  call21 = _ZL10num_blocksii(n, block.field1);
+  grid.field0 = call19;
+  grid.field1 = call21;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp22)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp23)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp22_2e_coerce)), ((uint8_t*)(&agg_2e_tmp22)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp23_2e_coerce)), ((uint8_t*)(&agg_2e_tmp23)), 12);
+#pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < call19;   i = i + 1){
 
-for(int32_t j = 0; j < call1;   j = j + 1){
+for(int32_t j = 0; j < call21;   j = j + 1){
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z10kernel_sumiiddPdS_S_S__OC_3(m, n, alpha, beta, C, A, B, tmp, call19, call1, 1, 8, 32, 1, i, j, 0, k, l, 0);
-}
+_Z10kernel_sumiiddPdS_S_S__OC_3(m, n, alpha, beta, C, A, B, tmp, call19, call21, 1, 8, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
