@@ -94,10 +94,10 @@ void _ZL11print_arrayiiPdS_S_(uint32_t, uint32_t, double*, double*, double*) __A
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z12kernel_splatiiiPdS_S_S_i_OC_1(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z9kernel_eyiiiPdS_S_S_i_OC_2(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z9kernel_exiiiPdS_S_S_i_OC_3(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z9kernel_hziiiPdS_S_S_i_OC_4(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z12kernel_splatiiiPdS_S_S_i_OC_1(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z9kernel_eyiiiPdS_S_S_i_OC_2(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z9kernel_exiiiPdS_S_S_i_OC_3(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z9kernel_hziiiPdS_S_S_i_OC_4(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -177,20 +177,17 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* ex, double* ey,
   int64_t i;
   int64_t j;
 
-#pragma omp parallel
-  {
-#pragma omp for schedule(static) nowait 
+#pragma omp parallel for 
 for(int64_t i = 0; i < ny;   i = i + 1){
   _fict_[i] = (double)(i);
 }
-#pragma omp for collapse(2) schedule(static) nowait
+#pragma omp parallel for 
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
   ex[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
   ey[(i * ny + j)] = (((double)(i) * (double)((j + 2))) / (double)(ny));
   hz[(i * ny + j)] = (((double)(i) * (double)((j + 3))) / (double)(nx));
-}
 }
 }
   return;
@@ -200,8 +197,22 @@ for(int64_t j = 0; j < ny;   j = j + 1){
 void _ZL6kerneliiiPdS_S_S_(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict) {
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp1;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp1_2e_coerce;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp5;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp6;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp5_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp6_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp18;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp19;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp18_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp19_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp32;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp33;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp32_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp33_2e_coerce;    /* Address-exposed local */
   int32_t t;
   uint32_t j;
   uint32_t k;
@@ -210,32 +221,95 @@ void _ZL6kerneliiiPdS_S_S_(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, 
 
 
 for(int32_t t = 0; t < tmax;   t = t + 1){
-#pragma omp parallel for //schedule(dynamic,4)
-for(int32_t j = 0; j < ny;   j = j + 1){
+  agg_2e_tmp.field0 = 256;
+  agg_2e_tmp.field1 = 1;
+  agg_2e_tmp.field2 = 1;
+  uint32_t call = _ZL10num_blocksii(ny, 256);
+  agg_2e_tmp1.field0 = call;
+  agg_2e_tmp1.field1 = 1;
+  agg_2e_tmp1.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < 256;   j = j + 1){
 
-_Z12kernel_splatiiiPdS_S_S_i_OC_1(tmax, nx, ny, ex, ey, hz, fict, t, j);
-}
-#pragma omp parallel for collapse(2) //schedule(dynamic,4)
-for(int32_t j = 1; j < nx;   j = j + 1){
-
-for(int32_t k = 0; k < ny;   k = k + 1){
-
-_Z9kernel_eyiiiPdS_S_S_i_OC_2(tmax, nx, ny, ex, ey, hz, fict, t, j, k);
-}
-}
-#pragma omp parallel for collapse(2) //schedule(static)
-for(int32_t j = 0; j < nx;   j = j + 1){
-
-for(int32_t k = 1; k < ny;   k = k + 1){
-_Z9kernel_exiiiPdS_S_S_i_OC_3(tmax, nx, ny, ex, ey, hz, fict, t, j, k);
+for(int32_t k = 0; k < call;   k = k + 1){
+_Z12kernel_splatiiiPdS_S_S_i_OC_1(tmax, nx, ny, ex, ey, hz, fict, t, 256, 1, 1, call, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-#pragma omp parallel for collapse(2) //schedule(static, 4)
-for(int32_t j = 0; j < nx-1;   j = j + 1){
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call3 = _ZL10num_blocksii((nx - 1), block.field0);
+  uint32_t call4 = _ZL10num_blocksii(ny, block.field1);
+  grid.field0 = call3;
+  grid.field1 = call4;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp5)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp6)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < call3;   j = j + 1){
 
-for(int32_t k = 0; k < ny-1;   k = k + 1){
+for(int32_t k = 0; k < call4;   k = k + 1){
 
-_Z9kernel_hziiiPdS_S_S_i_OC_4(tmax, nx, ny, ex, ey, hz, fict, t, j, k);
+for(int32_t l = 0; l < 8;   l = l + 1){
+
+for(int32_t m = 0; m < 32;   m = m + 1){
+_Z9kernel_eyiiiPdS_S_S_i_OC_2(tmax, nx, ny, ex, ey, hz, fict, t, call3, call4, 1, 8, 32, 1, j, k, 0, l, m, 0);
+}
+}
+}
+}
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call14 = _ZL10num_blocksii(nx, block.field0);
+  uint32_t call17 = _ZL10num_blocksii((ny - 1), block.field1);
+  grid.field0 = call14;
+  grid.field1 = call17;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp18)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp19)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&agg_2e_tmp18)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&agg_2e_tmp19)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < call14;   j = j + 1){
+
+for(int32_t k = 0; k < call17;   k = k + 1){
+
+for(int32_t l = 0; l < 8;   l = l + 1){
+
+for(int32_t m = 0; m < 32;   m = m + 1){
+_Z9kernel_exiiiPdS_S_S_i_OC_3(tmax, nx, ny, ex, ey, hz, fict, t, call14, call17, 1, 8, 32, 1, j, k, 0, l, m, 0);
+}
+}
+}
+}
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call28 = _ZL10num_blocksii((nx - 1), block.field0);
+  uint32_t call31 = _ZL10num_blocksii((ny - 1), block.field1);
+  grid.field0 = call28;
+  grid.field1 = call31;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp32)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp33)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp32_2e_coerce)), ((uint8_t*)(&agg_2e_tmp32)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < call28;   j = j + 1){
+
+for(int32_t k = 0; k < call31;   k = k + 1){
+
+for(int32_t l = 0; l < 8;   l = l + 1){
+
+for(int32_t m = 0; m < 32;   m = m + 1){
+_Z9kernel_hziiiPdS_S_S_i_OC_4(tmax, nx, ny, ex, ey, hz, fict, t, call28, call31, 1, 8, 32, 1, j, k, 0, l, m, 0);
+}
+}
 }
 }
 }
@@ -269,58 +343,58 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z12kernel_splatiiiPdS_S_S_i_OC_1(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t j) {
-  //int32_t j;
+void _Z12kernel_splatiiiPdS_S_S_i_OC_1(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int32_t j;
 
-  //j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  //if (j < ny) {
+  j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  if (j < ny) {
   ey[(0 * ny + j)] = fict[t];
-  //}
+  }
   return;
 }
 
 
-void _Z9kernel_eyiiiPdS_S_S_i_OC_2(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t i, uint32_t j) {
-  //int32_t i;
-  //int32_t j;
+void _Z9kernel_eyiiiPdS_S_S_i_OC_2(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int32_t i;
+  int32_t j;
 
-  //i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
-  //j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
-  //if (i < nx) {
-  //if (j < ny) {
+  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
+  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
+  if (i < nx) {
+  if (j < ny) {
   ey[(i * ny + j)] = (ey[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i - 1) * ny + j)])));
-  //}
-  //}
+  }
+  }
   return;
 }
 
 
-void _Z9kernel_exiiiPdS_S_S_i_OC_3(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t i, uint32_t j) {
-  //int32_t i;
-  //int32_t j;
+void _Z9kernel_exiiiPdS_S_S_i_OC_3(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int32_t i;
+  int32_t j;
 
-  //i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  //j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
-  //if (i < nx) {
-  //if (j < ny) {
+  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
+  if (i < nx) {
+  if (j < ny) {
   ex[(i * ny + j)] = (ex[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i * ny + j) - 1)])));
-  //}
-  //}
+  }
+  }
   return;
 }
 
 
-void _Z9kernel_hziiiPdS_S_S_i_OC_4(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t i, uint32_t j) {
-  //int32_t i;
-  //int32_t j;
+void _Z9kernel_hziiiPdS_S_S_i_OC_4(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict, uint32_t t, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int32_t i;
+  int32_t j;
 
-  //i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  //j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
-  //if (i < (nx - 1)) {
-  //if (j < (ny - 1)) {
+  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
+  if (i < (nx - 1)) {
+  if (j < (ny - 1)) {
   hz[(i * ny + j)] = (hz[(i * ny + j)] - (0.69999999999999996 * (((ex[((i * ny + j) + 1)] - ex[(i * ny + j)]) + ey[((i + 1) * ny + j)]) - ey[(i * ny + j)])));
-  //}
-  //}
+  }
+  }
   return;
 }
 
