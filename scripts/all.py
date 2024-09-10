@@ -48,7 +48,7 @@ def run_one(path, bmark, test_type):
   print("Generating %s on %s " % (test_type, bmark))
   with open(test_type+".log", "w") as fd:
     make_process = subprocess.Popen(["make", "run_"+test_type], stdout=fd, stderr=fd)
-    timer = Timer(600, make_process.kill)
+    timer = Timer(10000, make_process.kill)
     try:
       timer.start()
       stdout, stderr = make_process.communicate()
@@ -167,10 +167,19 @@ def set_config():
   # nvidia manual
   bmark_list = list(set(['trmm', 'covariance', 'correlation', 'heat-3d'] +[ 'covariance', 'correlation', 'trmm', 'heat-3d', 'nussinov', 'doitgen'] ))
 
-  # new manual
+  # gpu manual
   bmark_list = ['covariance', 'correlation', 'doitgen', 'heat-3d', 'nussinov', 'syr2k']
+  bmark_list = ['heat-3d']
 
-
+  # cpu manual
+  # bmark_list = [
+  #   'nussinov',
+  #   'symm',
+  #   '2mm',
+  #   'fdtd-2d',
+  #   'heat-3d',
+  #   'bicg',
+  # ]
 
   config['core_num'] = args.core_num
   config['bmark_list'] = bmark_list
@@ -244,14 +253,17 @@ def add_gcc_amd(results, tests):
   tests.append('gcc_amd')
   results.append('gcc_amd')
   results.append('gcc_amd.noelle')
+def add_manual(results, tests):
+  tests.append('manual')
+  results.append('manual.clang.cpu')
 def add_tulip(results, tests):
   tests.append('tulip')
-  results.append('tulip.icx')
-  results.append('tulip.icx.noelle')
-  results.append('tulip.clang')
+  #results.append('tulip.icx')
+  #results.append('tulip.icx.noelle')
+  #results.append('tulip.clang')
   results.append('tulip.clang.noelle')
-  results.append('tulip.gcc')
-  results.append('tulip.gcc.noelle')
+  #results.append('tulip.gcc')
+  #results.append('tulip.gcc.noelle')
 def add_nvhpc_nvidia(results, tests):
   tests.append('nvhpc_nvidia')
   results.append('nvhpc.gpu')
