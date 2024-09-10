@@ -214,7 +214,7 @@ for(int32_t w = n; w < (2 * n - 1);   w = w + 1){
   agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) schedule(dynamic, 8)
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < 32;   k = k + 1){
