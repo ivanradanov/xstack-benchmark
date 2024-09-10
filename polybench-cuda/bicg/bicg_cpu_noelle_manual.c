@@ -94,8 +94,8 @@ void _ZL11print_arrayiiPdS_(uint32_t, uint32_t, double*, double*) __ATTRIBUTELIS
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -176,19 +176,16 @@ void _ZL10init_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* A, double* r, dou
   int64_t i;
   int64_t j;
 
-#pragma omp parallel
-  {
-#pragma omp for schedule(static) nowait
+#pragma omp parallel for 
 for(int64_t i = 0; i < ny;   i = i + 1){
   p[i] = ((double)(i) * 3.1415926535897931);
 }
-#pragma omp for schedule(static) nowait
+#pragma omp parallel for 
 for(int64_t i = 0; i < nx;   i = i + 1){
   r[i] = ((double)(i) * 3.1415926535897931);
 
 for(int64_t j = 0; j < ny;   j = j + 1){
   A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
-}
 }
 }
   return;
@@ -214,16 +211,35 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t m, uint32_t n, double* A, double* s, double
   uint8_t* _4;
 
   call = _ZL10num_blocksii(n, 256);
-  call4 = _ZL10num_blocksii(m, 256);
-#pragma omp parallel
-  {
-#pragma omp for schedule(dynamic, 4)
-for(int32_t i = 0; i < n;   i = i + 1){
-_Z8kernel_qiiPdS_S_S_S__OC_1(m, n, A, s, q, p, r, i);
+  agg_2e_tmp.field0 = call;
+  agg_2e_tmp.field1 = 1;
+  agg_2e_tmp.field2 = 1;
+  agg_2e_tmp1.field0 = 256;
+  agg_2e_tmp1.field1 = 1;
+  agg_2e_tmp1.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t i = 0; i < call;   i = i + 1){
+
+for(int32_t j = 0; j < 256;   j = j + 1){
+_Z8kernel_qiiPdS_S_S_S__OC_1(m, n, A, s, q, p, r, call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
-#pragma omp for schedule(dynamic, 4)
-for(int32_t i = 0; i < m;   i = i + 1){
-_Z8kernel_siiPdS_S_S_S__OC_2(m, n, A, s, q, p, r, i);
+}
+  call4 = _ZL10num_blocksii(m, 256);
+  agg_2e_tmp3.field0 = call4;
+  agg_2e_tmp3.field1 = 1;
+  agg_2e_tmp3.field2 = 1;
+  agg_2e_tmp5.field0 = 256;
+  agg_2e_tmp5.field1 = 1;
+  agg_2e_tmp5.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t i = 0; i < call4;   i = i + 1){
+
+for(int32_t j = 0; j < 256;   j = j + 1){
+_Z8kernel_siiPdS_S_S_S__OC_2(m, n, A, s, q, p, r, call4, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
   return;
@@ -257,13 +273,13 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t i) {
-  //int64_t i;
+void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int64_t i;
   int64_t j;
   double dot;
 
- // i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  //if (i < n) {
+  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  if (i < n) {
   q[i] = 0;
   dot = 0;
 #pragma omp simd reduction(+:dot)
@@ -271,18 +287,18 @@ for(int64_t j = 0; j < m;   j = j + 1){
   dot = (dot + (A[(i * m + j)] * p[j]));
 }
   q[i] = (q[i] + dot);
-  //}
+  }
   return;
 }
 
 
-void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t j) {
-  //int64_t j;
+void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int64_t j;
   int64_t i;
   double dot;
 
-  //j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  //if (j < m) {
+  j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
+  if (j < m) {
   s[j] = 0;
   dot = 0;
 #pragma omp simd reduction(+:dot)
@@ -290,7 +306,7 @@ for(int64_t i = 0; i < n;   i = i + 1){
   dot = (dot + (r[i] * A[(i * m + j)]));
 }
   s[j] = dot;
-  //}
+  }
   return;
 }
 
