@@ -214,12 +214,12 @@ run_icx: icx.exe icx.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.time ./icx.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.time ./icx.noelle.exe $(PERF_ARGS)
 
-run_tulip: tulip.clang.noelle.exe tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS)
-	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.time ./tulip.icx.noelle.exe $(PERF_ARGS)
+run_tulip: tulip.clang.noelle.exe #tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe
+	# regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS)
+	# regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS)
+	# regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.time ./tulip.icx.noelle.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
+	# regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS)
 
 run_nvhpc_nvidia: nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.time ./nvhpc.gpu.exe $(PERF_ARGS)
@@ -237,7 +237,7 @@ run_nvhpc_cpu: nvhpc.cpu.exe nvhpc.cpu.noelle.exe
 
 run_manual:  manual.clang.cpu.exe manual.gcc.cpu.exe 
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.cpu.time ./manual.clang.cpu.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS) 
+	#regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS)
 
 # run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
 # 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS)
