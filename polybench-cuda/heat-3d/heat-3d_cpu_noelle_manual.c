@@ -94,7 +94,7 @@ void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z14kernel_stenciliPdS__OC_1(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z14kernel_stenciliPdS__OC_1(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -167,7 +167,7 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   uint64_t j;
   uint64_t k;
 
-#pragma omp parallel for //schedule(static,4)
+#pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -208,25 +208,45 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   uint32_t call = _ZL10num_blocksii((iter - 2), block.field0);
   uint32_t call2 = _ZL10num_blocksii((iter - 2), block.field1);
   uint32_t call4 = _ZL10num_blocksii((iter - 2), block.field2);
-#pragma omp parallel
-  {
-#pragma omp for collapse(2) schedule(dynamic,4) //nowait
-for(int32_t j = 1; j < iter-1;   j = j + 1){
+  grid.field0 = call;
+  grid.field1 = call2;
+  grid.field2 = call4;
+  memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < call;   j = j + 1){
 
-for(int32_t k = 1; k < iter-1;   k = k + 1){
+for(int32_t k = 0; k < call2;   k = k + 1){
 
-for(int32_t l = 1; l < iter-1;   l = l + 1){
-_Z14kernel_stenciliPdS__OC_1(iter, A, B, j, k, l);
+for(int32_t l = 0; l < call4;   l = l + 1){
+
+for(int32_t m = 0; m < 8;   m = m + 1){
+
+for(int32_t n = 0; n < 32;   n = n + 1){
+_Z14kernel_stenciliPdS__OC_1(iter, A, B, call, call2, call4, 1, 8, 32, j, k, l, 0, m, n);
 }
 }
 }
-#pragma omp for collapse(2) schedule(dynamic,4)
-for(int32_t j = 1; j < iter-1;   j = j + 1){
+}
+}
+  memcpy(((uint8_t*)(&agg_2e_tmp7)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp8)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp7_2e_coerce)), ((uint8_t*)(&agg_2e_tmp7)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp8_2e_coerce)), ((uint8_t*)(&agg_2e_tmp8)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < call;   j = j + 1){
 
-for(int32_t k = 1; k < iter-1;   k = k + 1){
+for(int32_t k = 0; k < call2;   k = k + 1){
 
-for(int32_t l = 1; l < iter-1;   l = l + 1){
-_Z14kernel_stenciliPdS__OC_1(iter, B, A, j, k, l);
+for(int32_t l = 0; l < call4;   l = l + 1){
+
+for(int32_t m = 0; m < 8;   m = m + 1){
+
+for(int32_t n = 0; n < 32;   n = n + 1){
+_Z14kernel_stenciliPdS__OC_1(iter, B, A, call, call2, call4, 1, 8, 32, j, k, l, 0, m, n);
+}
 }
 }
 }
@@ -264,21 +284,21 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z14kernel_stenciliPdS__OC_1(uint32_t iter, double* A, double* B, uint32_t i, uint32_t j, uint32_t k) {
-  //int32_t i;
-  //int32_t j;
-  //int32_t k;
+void _Z14kernel_stenciliPdS__OC_1(uint32_t iter, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+  int32_t i;
+  int32_t j;
+  int32_t k;
 
-  //i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
-  //j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
-  //k = blockDim_2e_z * blockIdx_2e_z + threadIdx_2e_z + 1;
-  //if (i < (iter - 1)) {
-  //if (j < (iter - 1)) {
-  //if (k < (iter - 1)) {
+  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
+  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
+  k = blockDim_2e_z * blockIdx_2e_z + threadIdx_2e_z + 1;
+  if (i < (iter - 1)) {
+  if (j < (iter - 1)) {
+  if (k < (iter - 1)) {
   B[((i * iter + j) * iter + k)] = ((((((A[(((i + 1) * iter + j) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i - 1) * iter + j) * iter + k)]) / 8) + (((A[((i * iter + (j + 1)) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[((i * iter + (j - 1)) * iter + k)]) / 8)) + (((A[(((i * iter + j) * iter + k) + 1)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i * iter + j) * iter + k) - 1)]) / 8)) + A[((i * iter + j) * iter + k)]);
-  //}
-  //}
-  //}
+  }
+  }
+  }
   return;
 }
 
