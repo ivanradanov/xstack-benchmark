@@ -97,7 +97,7 @@ uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, noth
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 double fmax(double, double);
-void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -178,21 +178,17 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* table, double* oldtable, double*
   int64_t i;
   uint64_t j;
 
-#pragma omp parallel
-  {
-#pragma omp for //collapse(2) 
+#pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
 
-  seq[i] = ((double)(i) / (double)(n));
 for(int64_t j = 0; j < n;   j = j + 1){
   table[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
   oldtable[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
-//#pragma omp for 
-//for(int64_t i = 0; i < n;   i = i + 1){
-//  seq[i] = ((double)(i) / (double)(n));
-//}
+#pragma omp parallel for 
+for(int64_t i = 0; i < n;   i = i + 1){
+  seq[i] = ((double)(i) / (double)(n));
 }
   return;
 }
@@ -210,11 +206,19 @@ void _ZL6kerneliPdS_S_(uint32_t n, double* seq, double* table, double* oldtable)
 
 for(int32_t w = n; w < (2 * n - 1);   w = w + 1){
   uint32_t call = _ZL10num_blocksii(n, 32);
-#pragma omp parallel for collapse(2) schedule(dynamic, 4)
+  agg_2e_tmp.field0 = call;
+  agg_2e_tmp.field1 = 1;
+  agg_2e_tmp.field2 = 1;
+  agg_2e_tmp1.field0 = 32;
+  agg_2e_tmp1.field1 = 1;
+  agg_2e_tmp1.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
+#pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < 32;   k = k + 1){
-_Z16kernel_max_scoreiPdS_S_i_OC_1(n, seq, table, oldtable, w, call, 32, j, k);
+_Z16kernel_max_scoreiPdS_S_i_OC_1(n, seq, table, oldtable, w, call, 1, 1, 32, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
@@ -246,7 +250,7 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, double* oldtable, uint32_t w, uint32_t gridDim_2e_x, uint32_t blockDim_2e_x, uint32_t blockIdx_2e_x, uint32_t threadIdx_2e_x) {
+void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, double* oldtable, uint32_t w, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   uint32_t mul;
   int64_t j;
   int64_t i;
