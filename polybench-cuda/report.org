@@ -41,11 +41,11 @@
 | nussinov |  4:30 |                                                                           | 1 insertion(+), 1 deletion(-)   |
 | symm     |  3:17 |                                                                           | 3 insertions(+), 3 deletions(-) |
 | 2mm      | 11:32 | unsuccessful                                                              | 2 insertions(+), 2 deletions(-) |
-| fdtd-2d  | 13:51 | unsuccessful                                                              | none                            |
-| heat-3d  | 12:01 | unsuccessful                                                              | none                            |
+| fdtd-2d  | 24:29 |                                                                           | 4 insertions(+), 4 deletions(-) |
+| heat-3d  | 23:32 | unsuccessful                                                              | none                            |
 | bicg     |  6:21 | unsuccessful (also tima variance too big for the results to be meaningful | 5 insertions(+), 2 deletions(-) |
 |----------+-------+---------------------------------------------------------------------------+---------------------------------|
 
 #+begin_src
-{'nussinov': {'manual.clang.cpu': 6.2673866928, 'tulip.clang.noelle': 11.9056905944}, 'symm': {'manual.clang.cpu': 9.4487000866, 'tulip.clang.noelle': 14.610496581}, '2mm': {'manual.clang.cpu': 17.3518958176, 'tulip.clang.noelle': 17.4495151858}, 'fdtd-2d': {'manual.clang.cpu': 24.7822534182, 'tulip.clang.noelle': 24.5502489536}, 'heat-3d': {'manual.clang.cpu': 119.08842453620002, 'tulip.clang.noelle': 118.73392381139999}, 'bicg': {'manual.clang.cpu': 0.20342909520000002, 'tulip.clang.noelle': 0.19569302979999997}, 'geomean': {'manual.clang.cpu': 9.226524719463145, 'tulip.clang.noelle': 10.958089300858534}}
+{'nussinov': {'manual.clang.cpu': 6.2673866928, 'tulip.clang.noelle': 11.9056905944}, 'symm': {'manual.clang.cpu': 9.4487000866, 'tulip.clang.noelle': 14.610496581}, '2mm': {'manual.clang.cpu': 17.3518958176, 'tulip.clang.noelle': 17.4495151858}, 'fdtd-2d': {'manual.clang.cpu': 24.0752984212,, 'tulip.clang.noelle': 24.9037290508}, 'heat-3d': {'manual.clang.cpu': 119.08842453620002, 'tulip.clang.noelle': 118.73392381139999}, 'bicg': {'manual.clang.cpu': 0.20342909520000002, 'tulip.clang.noelle': 0.19569302979999997}, 'geomean': {'manual.clang.cpu': 9.226524719463145, 'tulip.clang.noelle': 10.958089300858534}}
 #+end_src
