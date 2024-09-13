@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
   cov = malloc(m * m * 8);
   _ZL10init_arrayiiPd(m, n, ((double*)data));
 ;
-#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8]) map(tofrom: cov[0:m * m * 8])
+#pragma omp target data map(to: data[0:n * m * 8]) map(alloc: mean[0:m * 8]) map(from: cov[0:m * m * 8])
 {
   _ZL6kerneliiPdS_S_(m, n, ((double*)data), ((double*)cov), ((double*)mean));
 ;
@@ -230,10 +230,9 @@ void _ZL6kerneliiPdS_S_(uint32_t m, uint32_t n, double* data, double* cov, doubl
   agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z11kernel_meaniiPdS_S__OC_1(m, n, data, cov, mean, call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -251,12 +250,11 @@ _Z11kernel_meaniiPdS_S__OC_1(m, n, data, cov, mean, call, 1, 1, 256, 1, 1, i, 0,
   memcpy(((uint8_t*)(&agg_2e_tmp6)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma omp target teams distribute parallel for collapse(4)
 
 for(int32_t i = 0; i < 8;   i = i + 1){
 
 for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < call3;   k = k + 1){
 
@@ -278,12 +276,11 @@ _Z13kernel_reduceiiPdS_S__OC_2(m, n, data, cov, mean, 8, 32, 1, call3, call4, 1,
   memcpy(((uint8_t*)(&agg_2e_tmp19)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&agg_2e_tmp18)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&agg_2e_tmp19)), 12);
-#pragma omp target teams distribute collapse(2)
 
+#pragma omp target teams distribute parallel for collapse(4)
 for(int32_t i = 0; i < 8;   i = i + 1){
 
 for(int32_t j = 0; j < 32;   j = j + 1){
-#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < call14;   k = k + 1){
 
