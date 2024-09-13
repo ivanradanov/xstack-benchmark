@@ -172,14 +172,14 @@ def set_config():
   bmark_list = ['heat-3d']
 
   # cpu manual
-  # bmark_list = [
-  #   'nussinov',
-  #   'symm',
-  #   '2mm',
-  #   'fdtd-2d',
-  #   'heat-3d',
-  #   'bicg',
-  # ]
+  bmark_list = [
+    'nussinov',
+    'symm',
+    '2mm',
+    'fdtd-2d',
+    'heat-3d',
+    'bicg',
+  ]
 
   config['core_num'] = args.core_num
   config['bmark_list'] = bmark_list
