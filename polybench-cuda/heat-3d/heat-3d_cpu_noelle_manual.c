@@ -215,7 +215,7 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp5)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) schedule(dynamic)
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
@@ -235,7 +235,7 @@ _Z14kernel_stenciliPdS__OC_1(iter, A, B, call, call2, call4, 1, 8, 32, j, k, l, 
   memcpy(((uint8_t*)(&agg_2e_tmp8)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp7_2e_coerce)), ((uint8_t*)(&agg_2e_tmp7)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp8_2e_coerce)), ((uint8_t*)(&agg_2e_tmp8)), 12);
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) schedule(dynamic)
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
